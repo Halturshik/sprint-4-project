@@ -30,6 +30,9 @@ func distance(action int) float64 {
 // action int — количество совершенных действий(число шагов при ходьбе и беге, либо гребков при плавании).
 // duration float64 — длительность тренировки в часах.
 func meanSpeed(action int, duration float64) float64 {
+	if duration == 0 {
+		return 0
+	}
 	distance := distance(action)
 	return distance / duration
 }
@@ -43,22 +46,6 @@ func meanSpeed(action int, duration float64) float64 {
 // duration float64 — длительность тренировки в часах.
 func ShowTrainingInfo(action int, trainingType string, duration, weight, height float64, lengthPool, countPool int) string {
 	// ваш код здесь
-	if action <= 0 {
-		return "Количество действий должно быть больше 0."
-	}
-	if duration <= 0 {
-		return "Длительность тренировки должна быть больше 0."
-	}
-	if weight <= 0 {
-		return "Вес должен быть больше 0."
-	}
-	if height <= 0 && trainingType == "Ходьба" {
-		return "Рост дожен быть больше 0."
-	}
-	if lengthPool <= 0 && countPool <= 0 && trainingType == "Плавание" {
-		return "Длина бассейна должны быть больше 0. Количество успешных заплывов - тоже."
-	}
-
 	switch {
 	case trainingType == "Бег":
 		distance := distance(action)                               // вызовите здесь необходимую функцию
@@ -138,7 +125,9 @@ const (
 // countPool int — сколько раз пользователь переплыл бассейн.
 // duration float64 — длительность тренировки в часах.
 func swimmingMeanSpeed(lengthPool, countPool int, duration float64) float64 {
-
+	if duration == 0 {
+		return 0
+	}
 	return float64(lengthPool) * float64(countPool) / mInKm / duration
 }
 
